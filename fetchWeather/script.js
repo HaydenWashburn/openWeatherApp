@@ -1,7 +1,7 @@
 // Eventually this will be replaced with a element.value in a Input tag
 const apiKey = "011ceaa673e608d33292e3f8d37fa170";
-let cityname = "New+Orleans";
-let state = "LA";
+let cityname = "Birmingham";
+let state = "AL";
 let countryCode = "US"
 const limit = "5"
 let lan =""
