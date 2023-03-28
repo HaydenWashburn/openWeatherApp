@@ -18,6 +18,7 @@ async function getCityWeather(){
     let res = await fetch(geoURL, { mode: "cors" })
     let data = await res.json()
     let dataObj = data[0]
+    console.log(dataObj)
     lat = dataObj.lat
     lon = dataObj.lon
     let city = dataObj.name
@@ -32,21 +33,22 @@ async function getCityWeather(){
     stateEl.textContent = st8;
     let countryEl = document.getElementById("countryName");
     countryEl.textContent = country;
-    
-    let day1Icon = dataObj.weather[0].icon
-    // todo: check icon source
-    let iconURL = `https://openweathermap.org/img/wn/${day1Icon}@2x.png`
-    let day1IconID = document.getElementById("day1Icon")
-    day1IconID.src = iconURL
-    
     getCurrentWeather();
 }
 
 async function getCurrentWeather(){
     let res = await fetch(currentWeatherURL, { mode: "cors" })
+    
     let data = await res.json()
     console.log(data)
     let dataObj = data;
+    let day1Icon = dataObj.weather[0].icon;
+    console.log(day1Icon)
+
+    let day1IconID = document.getElementById("day1Icon");
+    let iconURL = `https://openweathermap.org/img/wn/${day1Icon}@2x.png`;
+    day1IconID.src = iconURL;
+    
     // todo: display weather data to screen...
 }
 
