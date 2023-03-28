@@ -36,12 +36,16 @@ async function getCityWeather() {
   getCurrentWeather();
 }
 
-async function getCurrentWeather(){
-    let res = await fetch(currentWeatherURL, { mode: "cors" })
-    let data = await res.json()
-    console.log(data)
-    let dataObj = data;
-    // todo: display weather data to screen...
+async function getCurrentWeather() {
+  let res = await fetch(currentWeatherURL, { mode: "cors" });
+  let data = await res.json();
+  console.log(data);
+  let dataObj = data;
+  weatherDisplayEle.textContent = `${Math.round(dataObj.main.temp)} °F`;
+  let day1Icon = dataObj.weather[0].icon;
+  let iconURL = `https://openweathermap.org/img/wn/${day1Icon}@2x.png`;
+  let day1IconID = document.getElementById("day1Icon");
+  day1IconID.src = iconURL;
 }
 
 formEle.addEventListener("submit", (event) => {
