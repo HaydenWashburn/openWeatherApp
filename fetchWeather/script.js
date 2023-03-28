@@ -5,7 +5,7 @@ const apiKey = "011ceaa673e608d33292e3f8d37fa170";
 let cityEle = document.getElementById("city");
 let stateEle = document.getElementById("state");
 let countryEle = document.getElementById("country");
-let formEle = document.getElementById("form");
+let formEle = document.getElementById("submit");
 let weatherDisplayEle = document.getElementById("weatherStatusDay1");
 
 // state
@@ -48,7 +48,7 @@ async function getCurrentWeather() {
   day1IconID.src = iconURL;
 }
 
-formEle.addEventListener("submit", (event) => {
+formEle.addEventListener("click", (event) => {
   event.preventDefault();
   getCityWeather();
 });
