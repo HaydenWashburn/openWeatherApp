@@ -14,8 +14,8 @@ let lan = "";
 let lon = "";
 let currentWeatherURL = "";
 
-async function getCityWeather() {
-  let geoURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityEle.value},${stateEle.value},${countryEle.value}&limit=${limit}&appid=${apiKey}`;
+async function getCityWeather(cityEle) {
+  let geoURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityEle},${stateEle.value},${countryEle.value}&limit=${limit}&appid=${apiKey}`;
   let res = await fetch(geoURL, { mode: "cors" });
   let data = await res.json();
   let dataObj = data[0];
@@ -46,9 +46,48 @@ async function getCurrentWeather() {
   let iconURL = `https://openweathermap.org/img/wn/${day1Icon}@2x.png`;
   let day1IconID = document.getElementById("day1Icon");
   day1IconID.src = iconURL;
+  listedAreas()
 }
+
+let savedAreas = [];
+function saveArea (){
+let area = {
+  city: cityEle.value,
+  state: stateEle.value,
+  country: countryEle.value,
+  time:new Date().toLocaleTimeString()
+}
+savedAreas.push(area)
+console.log(savedAreas)
+}
+
 
 formEle.addEventListener("click", (event) => {
   event.preventDefault();
-  getCityWeather();
+  getCityWeather(cityEle.value);
+  let checkbox = document.getElementById("checkbox");
+  if (checkbox.checked){
+    let check = JSON.stringify({city: cityEle.value, state: stateEle.value, country: countryEle.value})
+    let bool = savedAreas.some((area) => {
+      JSON.stringify(area) == check
+      // console.log( JSON.stringify(area), check)
+    })
+    console.log(bool)
+    if (!bool){
+      saveArea(cityEle.value)
+    }
+  }
 });
+
+function listedAreas(){
+  let ul = document.getElementById("listedAreas")
+  let location = document.getElementsByClassName("location")
+  Array.from(location).forEach(cl => cl.remove())
+  savedAreas.forEach((area) => {
+    let li = document.createElement("li")
+    li.classList.add("location")
+    li.textContent = `${area.city}, ${area.state}, ${area.time}`
+    ul.appendChild(li)
+    li.addEventListener("click", () => {getCityWeather(area.city)})
+  })
+}
